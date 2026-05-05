@@ -13,67 +13,90 @@
     height: 100vh;
     overflow: hidden;
   }
-  .deck {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+  .deck { height: 100vh; display: flex; flex-direction: column; }
   .slide {
     flex: 1;
     display: none;
     flex-direction: column;
     justify-content: center;
-    padding: 5vh 8vw;
+    padding: 4vh 6vw 9vh;
     overflow-y: auto;
   }
   .slide.active { display: flex; }
   h1 {
-    font-size: clamp(28px, 4vw, 56px);
-    margin: 0 0 8px;
+    font-size: clamp(26px, 3.4vw, 48px);
+    margin: 0 0 6px;
     color: #fff;
     letter-spacing: -0.02em;
   }
   h2 {
-    font-size: clamp(20px, 2.2vw, 32px);
-    margin: 0 0 24px;
+    font-size: clamp(18px, 1.9vw, 26px);
+    margin: 0 0 18px;
     color: #7ee2b8;
     font-weight: 500;
   }
   .body {
-    font-size: clamp(15px, 1.4vw, 19px);
-    line-height: 1.6;
+    font-size: clamp(14px, 1.2vw, 17px);
+    line-height: 1.55;
     color: #c9d1d9;
-    max-width: 900px;
+    max-width: 1100px;
   }
-  .body p { margin: 0 0 14px; }
-  .body ul { padding-left: 22px; }
-  .body li { margin-bottom: 8px; }
+  .body p { margin: 0 0 12px; }
+  .body ul { padding-left: 22px; margin: 6px 0 12px; }
+  .body li { margin-bottom: 6px; }
   .highlight { color: #ffd479; font-weight: 600; }
   .accent { color: #7ee2b8; }
+  .muted { color: #8b949e; }
+  code, .mono {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    background: #161b22;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.92em;
+    color: #ffd479;
+  }
   table {
     border-collapse: collapse;
-    margin: 14px 0;
-    font-size: 14px;
+    margin: 10px 0;
+    font-size: 13px;
     width: 100%;
-    max-width: 720px;
+    max-width: 760px;
   }
   th, td {
     border: 1px solid #30363d;
-    padding: 6px 10px;
+    padding: 5px 8px;
     text-align: left;
   }
   th { background: #161b22; color: #7ee2b8; }
 
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  svg.diagram { width: 100%; max-width: 760px; height: auto; }
+  svg .box { fill: #161b22; stroke: #30363d; stroke-width: 1.5; }
+  svg .box-accent { fill: #1f2d27; stroke: #7ee2b8; stroke-width: 1.5; }
+  svg .box-warn { fill: #2d2418; stroke: #ffd479; stroke-width: 1.5; }
+  svg text { fill: #e6edf3; font-family: -apple-system, sans-serif; font-size: 13px; }
+  svg .label { fill: #8b949e; font-size: 11px; }
+  svg .accent-text { fill: #7ee2b8; font-weight: 600; }
+  svg .warn-text { fill: #ffd479; font-weight: 600; }
+  svg .arrow { stroke: #6e7681; stroke-width: 1.5; fill: none; marker-end: url(#arrow); }
+  svg .arrow-accent { stroke: #7ee2b8; stroke-width: 1.5; fill: none; marker-end: url(#arrow-green); }
+
   .controls {
     position: fixed;
-    bottom: 16px;
+    bottom: 14px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     gap: 10px;
     align-items: center;
     background: rgba(22,27,34,0.92);
-    padding: 8px 16px;
+    padding: 7px 14px;
     border-radius: 999px;
     border: 1px solid #30363d;
     z-index: 10;
@@ -82,37 +105,34 @@
     background: #21262d;
     border: 1px solid #30363d;
     color: #e6edf3;
-    padding: 8px 14px;
+    padding: 7px 12px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
   }
   button:hover { background: #30363d; }
   button:disabled { opacity: 0.4; cursor: not-allowed; }
-  .counter { font-size: 13px; color: #8b949e; min-width: 56px; text-align: center; }
+  .counter { font-size: 12px; color: #8b949e; min-width: 56px; text-align: center; }
 
-  .note-box {
-    margin-top: 24px;
-    max-width: 900px;
-  }
+  .note-box { margin-top: 16px; max-width: 1100px; }
   .note-box label {
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     color: #8b949e;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
   .note-box textarea {
     width: 100%;
-    min-height: 90px;
-    padding: 12px;
+    min-height: 60px;
+    padding: 10px;
     border-radius: 8px;
     background: #161b22;
     color: #e6edf3;
     border: 1px solid #30363d;
     font-family: inherit;
-    font-size: 15px;
+    font-size: 14px;
     resize: vertical;
   }
   .note-box textarea:focus { outline: none; border-color: #7ee2b8; }
@@ -120,22 +140,22 @@
   .summary-comments {
     background: #161b22;
     border: 1px solid #30363d;
-    padding: 18px;
+    padding: 16px;
     border-radius: 10px;
     max-height: 45vh;
     overflow-y: auto;
     white-space: pre-wrap;
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 14px;
-    margin-top: 14px;
+    font-size: 13px;
+    margin-top: 12px;
     color: #c9d1d9;
   }
   .copy-btn {
     background: #238636;
     border-color: #2ea043;
     font-weight: 600;
-    padding: 12px 22px;
-    margin-top: 14px;
+    padding: 11px 20px;
+    margin-top: 12px;
   }
   .copy-btn:hover { background: #2ea043; }
   .copy-feedback {
@@ -143,9 +163,38 @@
     color: #7ee2b8;
     opacity: 0;
     transition: opacity 0.3s;
-    font-size: 14px;
+    font-size: 13px;
   }
   .copy-feedback.show { opacity: 1; }
+
+  ol.steps { counter-reset: step; padding-left: 0; list-style: none; }
+  ol.steps li {
+    counter-increment: step;
+    padding: 10px 12px 10px 48px;
+    margin-bottom: 8px;
+    position: relative;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+  }
+  ol.steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 12px; top: 50%;
+    transform: translateY(-50%);
+    width: 26px; height: 26px;
+    background: #7ee2b8;
+    color: #0d1117;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  ol.steps .step-title { color: #fff; font-weight: 600; display: block; margin-bottom: 2px; font-size: 14px; }
+  ol.steps .step-detail { color: #8b949e; font-size: 13px; }
+
   .progress {
     position: fixed;
     top: 0; left: 0;
@@ -158,6 +207,18 @@
 </head>
 <body>
 <div class="progress" id="progress"></div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6e7681"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7ee2b8"/>
+    </marker>
+  </defs>
+</svg>
+
 <div class="deck" id="deck">
 
   <section class="slide active">
@@ -168,8 +229,8 @@
       <p>An exploration of whether prediction markets can function as more than digital casinos — and underpin a currency that is more <span class="accent">store-of-value</span> than existing options.</p>
     </div>
     <div class="note-box">
-      <label for="note-1">Your comment on this slide</label>
-      <textarea id="note-1" data-slide-title="Title — Realcoins"></textarea>
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Title — Realcoins"></textarea>
     </div>
   </section>
 
@@ -182,8 +243,8 @@
       <p>Can we build an instrument that stabilizes what those dollars actually <em>buy</em>?</p>
     </div>
     <div class="note-box">
-      <label for="note-2">Your comment on this slide</label>
-      <textarea id="note-2" data-slide-title="The Problem"></textarea>
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="The Problem"></textarea>
     </div>
   </section>
 
@@ -192,12 +253,12 @@
     <h2>From casino to information primitive</h2>
     <div class="body">
       <p>Prediction markets expand <span class="highlight">price discovery</span> into domains traditional markets ignore: interest rates, wars, weather, rent.</p>
-      <p>This financialization of relevant information enables <span class="accent">novel hedging strategies</span> that retail can access.</p>
+      <p>This financialization of relevant information enables <span class="accent">novel hedging strategies</span> retail can access.</p>
       <p>Hyper-localized prediction markets → personalized stores-of-value, with outcomes underpinning value. We call these <span class="highlight">realcoins</span>.</p>
     </div>
     <div class="note-box">
-      <label for="note-3">Your comment on this slide</label>
-      <textarea id="note-3" data-slide-title="Prediction Markets"></textarea>
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Prediction Markets"></textarea>
     </div>
   </section>
 
@@ -215,8 +276,8 @@
       <p>Vitalik independently proposed an LLM-curated basket of prediction market shares matching user expenses.</p>
     </div>
     <div class="note-box">
-      <label for="note-4">Your comment on this slide</label>
-      <textarea id="note-4" data-slide-title="Hayek's Lineage"></textarea>
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Hayek's Lineage"></textarea>
     </div>
   </section>
 
@@ -226,11 +287,10 @@
     <div class="body">
       <p>If a market prices "Will your house burn down by January" at 1%, $200 buys 20,000 shares paying $20,000 if it does. Functionally identical to insurance — minus underwriters, claims processes, and "insurable interest" requirements.</p>
       <p><span class="accent">Hedger vs. speculator:</span> a renter <em>experiences</em> rent risk regardless. Buying shares offsets existing exposure, not creating new risk. They <em>expect</em> to lose value when outcomes go their way — purchasing power was preserved.</p>
-      <p>This intent inversion separates hedging from gambling.</p>
     </div>
     <div class="note-box">
-      <label for="note-5">Your comment on this slide</label>
-      <textarea id="note-5" data-slide-title="Localized Insurance"></textarea>
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Localized Insurance"></textarea>
     </div>
   </section>
 
@@ -240,11 +300,223 @@
     <div class="body">
       <p>Avg Manhattan rent (Dec 2025): <span class="highlight">~$5K/mo</span>, up <span class="highlight">6%</span> from $4.7K in Dec 2024.</p>
       <p>$4.7K covered <span class="accent">100% of rent in 2024</span> but only <span class="accent">94% in 2025</span> — a direct loss of experienced value.</p>
-      <p>A realcoin tied to Manhattan rent prediction markets would have <span class="highlight">risen with rent</span>, preserving purchasing power. Realcoin values are <em>positively correlated</em> with cost of living.</p>
+      <p>A realcoin tied to Manhattan rent prediction markets would have <span class="highlight">risen with rent</span>, preserving purchasing power.</p>
     </div>
     <div class="note-box">
-      <label for="note-6">Your comment on this slide</label>
-      <textarea id="note-6" data-slide-title="NYC Rent Example"></textarea>
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="NYC Rent Example"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>System Architecture</h1>
+    <h2>How the parts fit together</h2>
+    <div class="two-col">
+      <svg class="diagram" viewBox="0 0 720 300">
+        <rect class="box" x="20" y="30" width="120" height="60" rx="8"/>
+        <text x="80" y="58" text-anchor="middle" font-weight="600">User / Holder</text>
+        <text x="80" y="76" text-anchor="middle" class="label">retail purchaser</text>
+
+        <rect class="box-accent" x="280" y="20" width="200" height="120" rx="8"/>
+        <text x="380" y="48" text-anchor="middle" class="accent-text">Realcoin Issuer</text>
+        <text x="380" y="68" text-anchor="middle" class="label">licensed entity</text>
+        <text x="380" y="92" text-anchor="middle" font-size="12">• mints / burns realcoins</text>
+        <text x="380" y="110" text-anchor="middle" font-size="12">• custodies reserves</text>
+        <text x="380" y="128" text-anchor="middle" font-size="12">• rebalances basket</text>
+
+        <rect class="box" x="540" y="20" width="160" height="50" rx="8"/>
+        <text x="620" y="42" text-anchor="middle" font-weight="600">T-Bill / MMF</text>
+        <text x="620" y="60" text-anchor="middle" class="label">~60% reserve, yield</text>
+
+        <rect class="box-warn" x="540" y="90" width="160" height="60" rx="8"/>
+        <text x="620" y="112" text-anchor="middle" class="warn-text">Prediction Markets</text>
+        <text x="620" y="130" text-anchor="middle" class="label">~40% reserve</text>
+        <text x="620" y="146" text-anchor="middle" class="label">rent / CPI / utilities</text>
+
+        <rect class="box" x="540" y="200" width="160" height="60" rx="8"/>
+        <text x="620" y="222" text-anchor="middle" font-weight="600">Outcome Oracle</text>
+        <text x="620" y="240" text-anchor="middle" class="label">Zillow / BLS / Chainlink</text>
+        <text x="620" y="256" text-anchor="middle" class="label">resolves markets</text>
+
+        <rect class="box" x="280" y="200" width="200" height="60" rx="8"/>
+        <text x="380" y="224" text-anchor="middle" font-weight="600">NAV Calculator</text>
+        <text x="380" y="244" text-anchor="middle" class="label">reserves ÷ supply</text>
+
+        <rect class="box" x="20" y="200" width="200" height="60" rx="8"/>
+        <text x="120" y="224" text-anchor="middle" font-weight="600">Realcoin Contract</text>
+        <text x="120" y="244" text-anchor="middle" class="label">ERC-20 mint/redeem</text>
+
+        <path class="arrow" d="M 140 50 L 280 50"/>
+        <text x="200" y="42" text-anchor="middle" class="label">USDC deposit</text>
+
+        <path class="arrow-accent" d="M 280 90 L 140 90"/>
+        <text x="200" y="106" text-anchor="middle" class="accent-text" font-size="11">realcoin tokens</text>
+
+        <path class="arrow" d="M 480 50 L 540 45"/>
+        <path class="arrow" d="M 480 110 L 540 115"/>
+
+        <path class="arrow" d="M 540 230 L 480 230"/>
+        <text x="510" y="222" text-anchor="middle" class="label">resolutions</text>
+
+        <path class="arrow" d="M 620 200 L 620 160"/>
+        <text x="690" y="180" class="label">payouts</text>
+
+        <path class="arrow" d="M 380 200 L 380 140"/>
+        <text x="395" y="175" class="label">price feed</text>
+
+        <path class="arrow" d="M 280 230 L 220 230"/>
+        <text x="250" y="222" text-anchor="middle" class="label">NAV</text>
+
+        <path class="arrow" d="M 80 200 L 80 90"/>
+        <text x="50" y="150" class="label">redeem</text>
+      </svg>
+      <div class="body">
+        <p><span class="accent">Three external dependencies:</span> a regulated issuer (custody + compliance), a prediction-market venue (Polymarket, Kalshi, Limitless), and a trusted outcome oracle (Zillow API, BLS, Chainlink-bridged).</p>
+        <p><span class="accent">On-chain components:</span> ERC-20 realcoin token, NAV calculator, mint/redeem logic. The reserve is held off-chain by the issuer; on-chain attestations prove backing.</p>
+        <p>The user only ever touches the <span class="highlight">contract</span> — deposit USDC in, get realcoins out; burn realcoins, get USDC back at current NAV.</p>
+      </div>
+    </div>
+    <div class="note-box">
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="System Architecture"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Purchaser Flow</h1>
+    <h2>What a holder actually does, step by step</h2>
+    <ol class="steps">
+      <li><span class="step-title">Profile expenses</span><span class="step-detail">User connects bank/expense data, or selects a pre-built basket (e.g. "Manhattan renter — 1BR"). LLM or template maps spend categories → markets.</span></li>
+      <li><span class="step-title">Issuer constructs basket</span><span class="step-detail">Selects markets per design (binary / parametric ladder / structured 60-40), sized to user's monthly exposure. Returns expected basis risk and worst-case loss.</span></li>
+      <li><span class="step-title">Deposit</span><span class="step-detail">User sends USDC to the realcoin contract. Optional KYC depending on jurisdiction and ticket size.</span></li>
+      <li><span class="step-title">Mint</span><span class="step-detail">Contract mints realcoin tokens at current NAV. Issuer routes deposit: T-Bills custodian + market-making desk that buys the prediction shares at quoted prices.</span></li>
+      <li><span class="step-title">Hold</span><span class="step-detail">NAV updates daily as (a) T-Bill interest accrues, (b) market prices move with new information. User sees NAV ≈ tracking cost-of-living delta.</span></li>
+      <li><span class="step-title">Resolution event</span><span class="step-detail">Oracle reports the underlying index (e.g., Zillow median Manhattan rent for Dec). Each market resolves Yes/No. Winning shares pay $1; losing shares pay $0.</span></li>
+      <li><span class="step-title">Reserve update</span><span class="step-detail">Payouts roll back into the reserve pool. NAV jumps if the hedge fired; NAV drops if it didn't (offset by T-Bill yield in design 3).</span></li>
+      <li><span class="step-title">Redeem (any time)</span><span class="step-detail">User burns realcoins, receives USDC at current NAV. Held tokens earn the next cycle's hedge automatically — no re-entry.</span></li>
+    </ol>
+    <div class="note-box">
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Purchaser Flow"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Pricing & Position Sizing</h1>
+    <h2>The math the issuer runs at mint time</h2>
+    <div class="two-col">
+      <div class="body">
+        <p><span class="accent">Shares purchased</span> in a market priced at probability <code>p</code> with allocation <code>$A</code>:</p>
+        <p style="text-align:center;font-size:18px;"><code>shares = A / p</code></p>
+        <p>Each share pays $1 if Yes, $0 if No.</p>
+        <p><span class="accent">Allocation across rungs:</span> the issuer sizes each rung so combined payouts roughly track the index. Higher-probability rungs get more capital (cover the likely path); lower-probability rungs get less (catastrophic-tail protection).</p>
+        <p><span class="accent">NAV calculation:</span></p>
+        <p style="text-align:center;font-size:14px;"><code>NAV = (Σ shares_i × mark_i + cash + T-Bill_value) / supply</code></p>
+        <p><span class="muted">where <code>mark_i</code> is the current market price of rung <code>i</code>'s shares.</span></p>
+      </div>
+      <svg class="diagram" viewBox="0 0 360 320">
+        <text x="180" y="20" text-anchor="middle" class="accent-text" font-size="14">$1,200 deposit, design 3</text>
+
+        <path class="box" d="M 180 170 L 180 50 A 120 120 0 0 1 285 230 Z" fill="#1f2d27" stroke="#7ee2b8"/>
+        <text x="220" y="135" class="accent-text" font-size="13">T-Bills</text>
+        <text x="220" y="152" class="label" font-size="11">$720 (60%)</text>
+
+        <path class="box" d="M 180 170 L 285 230 A 120 120 0 0 1 110 260 Z" fill="#2d2418" stroke="#ffd479"/>
+        <text x="200" y="240" class="warn-text" font-size="11">$4.8K rung</text>
+        <text x="200" y="255" class="label" font-size="10">$280 → 373 sh</text>
+
+        <path class="box" d="M 180 170 L 110 260 A 120 120 0 0 1 65 175 Z" fill="#2d2418" stroke="#ffd479"/>
+        <text x="100" y="220" class="warn-text" font-size="11">$5.0K rung</text>
+        <text x="105" y="234" class="label" font-size="10">$120 → 300 sh</text>
+
+        <path class="box" d="M 180 170 L 65 175 A 120 120 0 0 1 180 50 Z" fill="#2d2418" stroke="#ffd479"/>
+        <text x="115" y="120" class="warn-text" font-size="11">$5.2K rung</text>
+        <text x="120" y="135" class="label" font-size="10">$80 → 400 sh</text>
+
+        <text x="180" y="305" text-anchor="middle" class="label" font-size="12">total: 1,073 prediction shares + $720 T-Bills</text>
+      </svg>
+    </div>
+    <div class="note-box">
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Pricing & Position Sizing"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Lifecycle Timeline</h1>
+    <h2>What happens between mint and resolution</h2>
+    <svg class="diagram" viewBox="0 0 760 240" style="max-width: 980px;">
+      <line x1="40" y1="180" x2="720" y2="180" stroke="#30363d" stroke-width="2"/>
+
+      <g stroke="#30363d">
+        <line x1="80" y1="175" x2="80" y2="185"/>
+        <line x1="240" y1="175" x2="240" y2="185"/>
+        <line x1="400" y1="175" x2="400" y2="185"/>
+        <line x1="560" y1="175" x2="560" y2="185"/>
+        <line x1="700" y1="175" x2="700" y2="185"/>
+      </g>
+
+      <text x="80" y="205" text-anchor="middle" class="label">T0</text>
+      <text x="240" y="205" text-anchor="middle" class="label">T0 + days</text>
+      <text x="400" y="205" text-anchor="middle" class="label">T0 + weeks</text>
+      <text x="560" y="205" text-anchor="middle" class="label">resolution</text>
+      <text x="700" y="205" text-anchor="middle" class="label">redeem</text>
+
+      <rect class="box-accent" x="40" y="60" width="80" height="60" rx="6"/>
+      <text x="80" y="84" text-anchor="middle" class="accent-text" font-size="12">MINT</text>
+      <text x="80" y="100" text-anchor="middle" class="label" font-size="10">deposit USDC</text>
+      <text x="80" y="113" text-anchor="middle" class="label" font-size="10">receive token</text>
+
+      <rect class="box" x="160" y="60" width="160" height="60" rx="6"/>
+      <text x="240" y="84" text-anchor="middle" font-weight="600" font-size="12">HOLD — yield</text>
+      <text x="240" y="100" text-anchor="middle" class="label" font-size="10">T-Bill accrual</text>
+      <text x="240" y="113" text-anchor="middle" class="label" font-size="10">NAV ↑ slowly</text>
+
+      <rect class="box" x="320" y="60" width="160" height="60" rx="6"/>
+      <text x="400" y="84" text-anchor="middle" font-weight="600" font-size="12">HOLD — repricing</text>
+      <text x="400" y="100" text-anchor="middle" class="label" font-size="10">market probabilities shift</text>
+      <text x="400" y="113" text-anchor="middle" class="label" font-size="10">NAV reflects new info</text>
+
+      <rect class="box-warn" x="500" y="60" width="120" height="60" rx="6"/>
+      <text x="560" y="84" text-anchor="middle" class="warn-text" font-size="12">RESOLVE</text>
+      <text x="560" y="100" text-anchor="middle" class="label" font-size="10">oracle reports index</text>
+      <text x="560" y="113" text-anchor="middle" class="label" font-size="10">Yes shares pay $1</text>
+
+      <rect class="box-accent" x="640" y="60" width="80" height="60" rx="6"/>
+      <text x="680" y="84" text-anchor="middle" class="accent-text" font-size="12">REDEEM</text>
+      <text x="680" y="100" text-anchor="middle" class="label" font-size="10">burn token</text>
+      <text x="680" y="113" text-anchor="middle" class="label" font-size="10">USDC at NAV</text>
+
+      <path d="M 80 160 Q 240 158, 320 150 T 480 142 L 560 100 L 700 100"
+            fill="none" stroke="#7ee2b8" stroke-width="2"/>
+      <text x="610" y="92" class="accent-text" font-size="11">NAV jump on payout</text>
+
+      <text x="40" y="40" class="accent-text" font-size="13">Holder NAV (illustrative)</text>
+    </svg>
+    <div class="body">
+      <p><span class="accent">Realcoins are perpetual.</span> Resolution doesn't end the position — payouts roll into the reserve and the issuer rebalances into the next cycle's markets. Holders only "check out" by burning tokens.</p>
+    </div>
+    <div class="note-box">
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Lifecycle Timeline"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Oracle & Resolution</h1>
+    <h2>The hardest part of the stack</h2>
+    <div class="body">
+      <p>Markets are only as honest as their resolution source. Three failure modes to design against:</p>
+      <ul>
+        <li><span class="highlight">Oracle manipulation</span> — pick sources with skin in the game (BLS official CPI, Zillow's published index, NYC RGB) and require multi-source consensus where possible.</li>
+        <li><span class="highlight">Reporting lag</span> — rent indices publish weeks after the period. Realcoin holders may want to redeem before resolution; NAV must reflect <em>expected</em> outcome via current market price, not just resolved outcomes.</li>
+        <li><span class="highlight">Index drift / methodology change</span> — if Zillow changes its methodology mid-period, payouts break. Lock the methodology in market terms; freeze methodology versions.</li>
+      </ul>
+      <p><span class="accent">Settlement path:</span> Oracle posts → market resolves on Polymarket/Kalshi → issuer's automated executor sells/claims winning shares for USDC → reserves credited → NAV recalc → next cycle's basket purchased.</p>
+    </div>
+    <div class="note-box">
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Oracle & Resolution"></textarea>
     </div>
   </section>
 
@@ -254,31 +526,59 @@
     <div class="body">
       <p>Realcoin backed by Yes/No markets tied to cost-of-living thresholds. <em>"Median Manhattan rent &gt; $5K?"</em> at 35% → $4.7K buys 13.4K shares paying out $13.4K if Yes.</p>
       <p><span class="accent">Pros:</span> simple, easy to price, already exist. A 5–10 market basket covers rent, groceries, electricity, healthcare.</p>
-      <p><span class="highlight">Limitation:</span> the gap problem — if rent rises $4.7K → $4.9K, purchasing power erodes but the hedge never activates.</p>
+      <p><span class="highlight">Limitation — the gap problem:</span> if rent rises $4.7K → $4.9K, purchasing power erodes but the hedge never activates.</p>
     </div>
     <div class="note-box">
-      <label for="note-7">Your comment on this slide</label>
-      <textarea id="note-7" data-slide-title="Design 1 — Binary"></textarea>
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Design 1 — Binary"></textarea>
     </div>
   </section>
 
   <section class="slide">
     <h1>Design 2</h1>
     <h2>Parametric / Scalar Markets</h2>
-    <div class="body">
-      <p>Tie payouts to an <span class="accent">index value</span>, not a binary threshold. True continuous markets don't exist yet — approximated with <span class="highlight">nested binary "rungs"</span>.</p>
-      <table>
-        <tr><th>Trigger</th><th>Price</th><th>Invest</th><th>If $5,100</th></tr>
-        <tr><td>&gt; $4,800</td><td>75%</td><td>$700</td><td>$933</td></tr>
-        <tr><td>&gt; $5,000</td><td>40%</td><td>$300</td><td>$750</td></tr>
-        <tr><td>&gt; $5,200</td><td>20%</td><td>$200</td><td>$0</td></tr>
-        <tr><td><b>Total</b></td><td></td><td><b>$1,200</b></td><td><b>$1,683</b></td></tr>
-      </table>
-      <p>Tighter rungs → more granularity but higher operational cost. Still loses principal when rent falls.</p>
+    <div class="two-col">
+      <div class="body">
+        <p>Tie payouts to an <span class="accent">index value</span>, not a binary threshold. True continuous markets don't exist yet — approximated with <span class="highlight">nested binary "rungs"</span>.</p>
+        <table>
+          <tr><th>Trigger</th><th>Price</th><th>Invest</th><th>If $5,100</th></tr>
+          <tr><td>&gt; $4,800</td><td>75%</td><td>$700</td><td>$933</td></tr>
+          <tr><td>&gt; $5,000</td><td>40%</td><td>$300</td><td>$750</td></tr>
+          <tr><td>&gt; $5,200</td><td>20%</td><td>$200</td><td>$0</td></tr>
+          <tr><td><b>Total</b></td><td></td><td><b>$1,200</b></td><td><b>$1,683</b></td></tr>
+        </table>
+        <p>Tighter rungs → more granularity but higher operational cost.</p>
+      </div>
+      <svg class="diagram" viewBox="0 0 360 280">
+        <text x="180" y="20" text-anchor="middle" class="accent-text" font-size="13">Rung structure (Manhattan rent)</text>
+        <line x1="60" y1="240" x2="320" y2="240" stroke="#30363d" stroke-width="2"/>
+        <line x1="60" y1="240" x2="60" y2="40" stroke="#30363d" stroke-width="2"/>
+
+        <line x1="56" y1="170" x2="64" y2="170" stroke="#7ee2b8" stroke-width="2"/>
+        <text x="35" y="174" class="label" font-size="11">$4.8K</text>
+        <line x1="60" y1="170" x2="320" y2="170" stroke="#ffd479" stroke-dasharray="3,3" stroke-width="1"/>
+        <text x="290" y="166" class="warn-text" font-size="10">75% — $700</text>
+
+        <line x1="56" y1="120" x2="64" y2="120" stroke="#7ee2b8" stroke-width="2"/>
+        <text x="35" y="124" class="label" font-size="11">$5.0K</text>
+        <line x1="60" y1="120" x2="320" y2="120" stroke="#ffd479" stroke-dasharray="3,3" stroke-width="1"/>
+        <text x="290" y="116" class="warn-text" font-size="10">40% — $300</text>
+
+        <line x1="56" y1="70" x2="64" y2="70" stroke="#7ee2b8" stroke-width="2"/>
+        <text x="35" y="74" class="label" font-size="11">$5.2K</text>
+        <line x1="60" y1="70" x2="320" y2="70" stroke="#ffd479" stroke-dasharray="3,3" stroke-width="1"/>
+        <text x="290" y="66" class="warn-text" font-size="10">20% — $200</text>
+
+        <line x1="200" y1="40" x2="200" y2="240" stroke="#7ee2b8" stroke-width="2"/>
+        <circle cx="200" cy="95" r="4" fill="#7ee2b8"/>
+        <text x="200" y="32" text-anchor="middle" class="accent-text" font-size="11">resolves @ $5.1K</text>
+
+        <text x="180" y="265" text-anchor="middle" class="label" font-size="11">crossed rungs pay; gap to next rung is unpaid</text>
+      </svg>
     </div>
     <div class="note-box">
-      <label for="note-8">Your comment on this slide</label>
-      <textarea id="note-8" data-slide-title="Design 2 — Parametric"></textarea>
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Design 2 — Parametric"></textarea>
     </div>
   </section>
 
@@ -293,11 +593,58 @@
         <tr><td>T-Bills</td><td>$720</td><td>$745</td><td>$745</td></tr>
         <tr><td><b>Total</b></td><td><b>$1,200</b></td><td><b>$2,092</b></td><td><b>$745</b></td></tr>
       </table>
-      <p>Downside principal loss capped at <span class="accent">~38%</span> instead of total loss. The MMF + hedge wrapper has legal precedent — the prediction-market layer is the novelty.</p>
+      <p>Downside principal loss capped at <span class="accent">~38%</span> instead of total loss.</p>
     </div>
     <div class="note-box">
-      <label for="note-9">Your comment on this slide</label>
-      <textarea id="note-9" data-slide-title="Design 3 — Yield + Hedge"></textarea>
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Design 3 — Yield + Hedge"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Payoff Curves Compared</h1>
+    <h2>How each design pays out as rent moves</h2>
+    <svg class="diagram" viewBox="0 0 720 360" style="max-width: 900px;">
+      <line x1="60" y1="300" x2="680" y2="300" stroke="#30363d" stroke-width="2"/>
+      <line x1="60" y1="40" x2="60" y2="300" stroke="#30363d" stroke-width="2"/>
+
+      <text x="60" y="320" class="label" font-size="11" text-anchor="middle">$4.3K</text>
+      <text x="184" y="320" class="label" font-size="11" text-anchor="middle">$4.6K</text>
+      <text x="308" y="320" class="label" font-size="11" text-anchor="middle">$4.8K</text>
+      <text x="432" y="320" class="label" font-size="11" text-anchor="middle">$5.0K</text>
+      <text x="556" y="320" class="label" font-size="11" text-anchor="middle">$5.2K</text>
+      <text x="660" y="320" class="label" font-size="11" text-anchor="middle">$5.4K</text>
+      <text x="370" y="345" class="label" font-size="12" text-anchor="middle">resolved median rent</text>
+
+      <text x="50" y="304" class="label" font-size="11" text-anchor="end">$0</text>
+      <text x="50" y="234" class="label" font-size="11" text-anchor="end">$745</text>
+      <text x="50" y="170" class="label" font-size="11" text-anchor="end">$1.2K</text>
+      <text x="50" y="120" class="label" font-size="11" text-anchor="end">$1.7K</text>
+      <text x="50" y="50" class="label" font-size="11" text-anchor="end">$2.1K</text>
+      <text x="20" y="170" class="label" font-size="12" text-anchor="middle" transform="rotate(-90 20 170)">payout</text>
+
+      <line x1="60" y1="170" x2="680" y2="170" stroke="#6e7681" stroke-dasharray="4,4" stroke-width="1"/>
+      <text x="668" y="165" class="label" font-size="10" text-anchor="end">$1.2K break-even</text>
+
+      <path d="M 60 300 L 432 300 L 432 120 L 680 120" fill="none" stroke="#f97583" stroke-width="2"/>
+      <text x="120" y="295" class="label" font-size="11" fill="#f97583">Design 1 — binary @ $5K</text>
+
+      <path d="M 60 300 L 308 300 L 308 235 L 432 235 L 432 120 L 556 120 L 556 50 L 680 50"
+            fill="none" stroke="#ffd479" stroke-width="2"/>
+      <text x="540" y="45" class="label" font-size="11" fill="#ffd479">Design 2 — parametric ladder</text>
+
+      <path d="M 60 234 L 308 234 L 308 200 L 432 200 L 432 120 L 556 120 L 556 75 L 680 75"
+            fill="none" stroke="#7ee2b8" stroke-width="2.5"/>
+      <text x="540" y="100" class="label" font-size="11" fill="#7ee2b8">Design 3 — 60/40 with T-Bill floor</text>
+
+      <text x="370" y="20" class="accent-text" font-size="13" text-anchor="middle">$1,200 deposit · payout vs. resolved rent</text>
+    </svg>
+    <div class="body">
+      <p><span class="accent">Read:</span> binary is cliff-shaped — total loss below threshold, full payout above. Parametric stair-steps to track the index. Design 3 lifts the entire curve by the T-Bill floor at the cost of capping upside.</p>
+    </div>
+    <div class="note-box">
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Payoff Curves Compared"></textarea>
     </div>
   </section>
 
@@ -309,12 +656,13 @@
         <li><span class="highlight">Basis risk</span> — national CPI doesn't track Manhattan rent. Specificity gap = hedge gap.</li>
         <li><span class="highlight">Liquidity</span> — cost-of-living markets are thin compared to sports/elections; need natural counterparties.</li>
         <li><span class="highlight">Legal clarity</span> — the prediction-market hedging layer isn't regulated like traditional structured products.</li>
+        <li><span class="highlight">Counterparties</span> — every Yes share needs a No-share holder. Issuers may seed liquidity initially but can't be the marginal counterparty long-term.</li>
       </ul>
       <p>Hayek's insight wasn't that one currency would win, but that <span class="accent">competition would discover</span> which best preserved value. Realcoins are an entry into that competition. The tools exist today.</p>
     </div>
     <div class="note-box">
-      <label for="note-10">Your comment on this slide</label>
-      <textarea id="note-10" data-slide-title="Open Problems"></textarea>
+      <label>Your comment on this slide</label>
+      <textarea data-slide-title="Open Problems"></textarea>
     </div>
   </section>
 
@@ -333,7 +681,7 @@
 
 <div class="controls">
   <button onclick="go(-1)" id="prev">← Prev</button>
-  <span class="counter" id="counter">1 / 11</span>
+  <span class="counter" id="counter">1 / ?</span>
   <button onclick="go(1)" id="next">Next →</button>
 </div>
 
@@ -348,7 +696,6 @@
     document.getElementById('next').disabled = i === slides.length - 1;
     document.getElementById('progress').style.width = `${((i+1)/slides.length)*100}%`;
     if (i === slides.length - 1) buildSummary();
-    saveNotes();
   }
 
   function go(d) {
@@ -357,6 +704,7 @@
   }
 
   document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'TEXTAREA') return;
     if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
     if (e.key === 'ArrowLeft') go(-1);
   });
@@ -366,9 +714,7 @@
     const out = [];
     boxes.forEach((b, idx) => {
       const txt = b.value.trim();
-      if (txt) {
-        out.push(`Slide ${idx+1} — ${b.dataset.slideTitle}\n${txt}\n`);
-      }
+      if (txt) out.push(`Slide ${idx+1} — ${b.dataset.slideTitle}\n${txt}\n`);
     });
     document.getElementById('summary').textContent = out.length
       ? out.join('\n')
@@ -385,19 +731,17 @@
     });
   }
 
-  // Persist notes across reloads
   function saveNotes() {
     const data = {};
     document.querySelectorAll('textarea[data-slide-title]').forEach(b => {
-      data[b.id] = b.value;
+      data[b.dataset.slideTitle] = b.value;
     });
     localStorage.setItem('realcoin-notes', JSON.stringify(data));
   }
   function loadNotes() {
     const data = JSON.parse(localStorage.getItem('realcoin-notes') || '{}');
-    Object.entries(data).forEach(([id, val]) => {
-      const el = document.getElementById(id);
-      if (el) el.value = val;
+    document.querySelectorAll('textarea[data-slide-title]').forEach(b => {
+      if (data[b.dataset.slideTitle]) b.value = data[b.dataset.slideTitle];
     });
   }
 
