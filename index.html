@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Realcoins — Slideshow Summary</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #0d1117;
+    color: #e6edf3;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .deck {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .slide {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5vh 8vw;
+    overflow-y: auto;
+  }
+  .slide.active { display: flex; }
+  h1 {
+    font-size: clamp(28px, 4vw, 56px);
+    margin: 0 0 8px;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: clamp(20px, 2.2vw, 32px);
+    margin: 0 0 24px;
+    color: #7ee2b8;
+    font-weight: 500;
+  }
+  .body {
+    font-size: clamp(15px, 1.4vw, 19px);
+    line-height: 1.6;
+    color: #c9d1d9;
+    max-width: 900px;
+  }
+  .body p { margin: 0 0 14px; }
+  .body ul { padding-left: 22px; }
+  .body li { margin-bottom: 8px; }
+  .highlight { color: #ffd479; font-weight: 600; }
+  .accent { color: #7ee2b8; }
+  table {
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 14px;
+    width: 100%;
+    max-width: 720px;
+  }
+  th, td {
+    border: 1px solid #30363d;
+    padding: 6px 10px;
+    text-align: left;
+  }
+  th { background: #161b22; color: #7ee2b8; }
+
+  .controls {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: rgba(22,27,34,0.92);
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid #30363d;
+    z-index: 10;
+  }
+  button {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #e6edf3;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  button:hover { background: #30363d; }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .counter { font-size: 13px; color: #8b949e; min-width: 56px; text-align: center; }
+
+  .note-box {
+    margin-top: 24px;
+    max-width: 900px;
+  }
+  .note-box label {
+    display: block;
+    font-size: 13px;
+    color: #8b949e;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .note-box textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #161b22;
+    color: #e6edf3;
+    border: 1px solid #30363d;
+    font-family: inherit;
+    font-size: 15px;
+    resize: vertical;
+  }
+  .note-box textarea:focus { outline: none; border-color: #7ee2b8; }
+
+  .summary-comments {
+    background: #161b22;
+    border: 1px solid #30363d;
+    padding: 18px;
+    border-radius: 10px;
+    max-height: 45vh;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 14px;
+    margin-top: 14px;
+    color: #c9d1d9;
+  }
+  .copy-btn {
+    background: #238636;
+    border-color: #2ea043;
+    font-weight: 600;
+    padding: 12px 22px;
+    margin-top: 14px;
+  }
+  .copy-btn:hover { background: #2ea043; }
+  .copy-feedback {
+    margin-left: 12px;
+    color: #7ee2b8;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 14px;
+  }
+  .copy-feedback.show { opacity: 1; }
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: #7ee2b8;
+    transition: width 0.3s;
+    z-index: 20;
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="deck" id="deck">
+
+  <section class="slide active">
+    <h1>Realcoins</h1>
+    <h2>Hayekian Realcoins and Prediction Markets</h2>
+    <div class="body">
+      <p>Toward currencies that stabilize <span class="highlight">purchasing power</span> rather than dollars.</p>
+      <p>An exploration of whether prediction markets can function as more than digital casinos — and underpin a currency that is more <span class="accent">store-of-value</span> than existing options.</p>
+    </div>
+    <div class="note-box">
+      <label for="note-1">Your comment on this slide</label>
+      <textarea id="note-1" data-slide-title="Title — Realcoins"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>The Problem</h1>
+    <h2>Stablecoins stabilize dollars, not value</h2>
+    <div class="body">
+      <p>Stablecoins are <span class="highlight">~$300B</span> market cap, growing at a <span class="highlight">50% 4-year CAGR</span>. Almost all are USD-denominated.</p>
+      <p>If 10 apples cost $10 today and $20 tomorrow, your "stable" $10 has lost 50% of its value. <span class="accent">Pegged to dollars ≠ pegged to purchasing power.</span></p>
+      <p>Can we build an instrument that stabilizes what those dollars actually <em>buy</em>?</p>
+    </div>
+    <div class="note-box">
+      <label for="note-2">Your comment on this slide</label>
+      <textarea id="note-2" data-slide-title="The Problem"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Prediction Markets</h1>
+    <h2>From casino to information primitive</h2>
+    <div class="body">
+      <p>Prediction markets expand <span class="highlight">price discovery</span> into domains traditional markets ignore: interest rates, wars, weather, rent.</p>
+      <p>This financialization of relevant information enables <span class="accent">novel hedging strategies</span> that retail can access.</p>
+      <p>Hyper-localized prediction markets → personalized stores-of-value, with outcomes underpinning value. We call these <span class="highlight">realcoins</span>.</p>
+    </div>
+    <div class="note-box">
+      <label for="note-3">Your comment on this slide</label>
+      <textarea id="note-3" data-slide-title="Prediction Markets"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Hayek's Lineage</h1>
+    <h2>The Denationalisation of Money (1976)</h2>
+    <div class="body">
+      <p>Hayek envisioned <span class="accent">competitive private currencies</span>, with the best at preserving value winning out — backed by a basket of commodities.</p>
+      <p>He identified the destination but lacked the mechanisms. Today three primitives change that:</p>
+      <ul>
+        <li><span class="highlight">Stablecoins</span> — proven private digital money at scale</li>
+        <li><span class="highlight">DeFi</span> — programmable derivatives & structured positions</li>
+        <li><span class="highlight">Prediction markets</span> — liquid claims on real-world outcomes</li>
+      </ul>
+      <p>Vitalik independently proposed an LLM-curated basket of prediction market shares matching user expenses.</p>
+    </div>
+    <div class="note-box">
+      <label for="note-4">Your comment on this slide</label>
+      <textarea id="note-4" data-slide-title="Hayek's Lineage"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Localized Insurance</h1>
+    <h2>Prediction markets ≈ insurance without the gatekeepers</h2>
+    <div class="body">
+      <p>If a market prices "Will your house burn down by January" at 1%, $200 buys 20,000 shares paying $20,000 if it does. Functionally identical to insurance — minus underwriters, claims processes, and "insurable interest" requirements.</p>
+      <p><span class="accent">Hedger vs. speculator:</span> a renter <em>experiences</em> rent risk regardless. Buying shares offsets existing exposure, not creating new risk. They <em>expect</em> to lose value when outcomes go their way — purchasing power was preserved.</p>
+      <p>This intent inversion separates hedging from gambling.</p>
+    </div>
+    <div class="note-box">
+      <label for="note-5">Your comment on this slide</label>
+      <textarea id="note-5" data-slide-title="Localized Insurance"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>NYC Rent Example</h1>
+    <h2>Why this matters today</h2>
+    <div class="body">
+      <p>Avg Manhattan rent (Dec 2025): <span class="highlight">~$5K/mo</span>, up <span class="highlight">6%</span> from $4.7K in Dec 2024.</p>
+      <p>$4.7K covered <span class="accent">100% of rent in 2024</span> but only <span class="accent">94% in 2025</span> — a direct loss of experienced value.</p>
+      <p>A realcoin tied to Manhattan rent prediction markets would have <span class="highlight">risen with rent</span>, preserving purchasing power. Realcoin values are <em>positively correlated</em> with cost of living.</p>
+    </div>
+    <div class="note-box">
+      <label for="note-6">Your comment on this slide</label>
+      <textarea id="note-6" data-slide-title="NYC Rent Example"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Design 1</h1>
+    <h2>Binary Prediction Markets</h2>
+    <div class="body">
+      <p>Realcoin backed by Yes/No markets tied to cost-of-living thresholds. <em>"Median Manhattan rent &gt; $5K?"</em> at 35% → $4.7K buys 13.4K shares paying out $13.4K if Yes.</p>
+      <p><span class="accent">Pros:</span> simple, easy to price, already exist. A 5–10 market basket covers rent, groceries, electricity, healthcare.</p>
+      <p><span class="highlight">Limitation:</span> the gap problem — if rent rises $4.7K → $4.9K, purchasing power erodes but the hedge never activates.</p>
+    </div>
+    <div class="note-box">
+      <label for="note-7">Your comment on this slide</label>
+      <textarea id="note-7" data-slide-title="Design 1 — Binary"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Design 2</h1>
+    <h2>Parametric / Scalar Markets</h2>
+    <div class="body">
+      <p>Tie payouts to an <span class="accent">index value</span>, not a binary threshold. True continuous markets don't exist yet — approximated with <span class="highlight">nested binary "rungs"</span>.</p>
+      <table>
+        <tr><th>Trigger</th><th>Price</th><th>Invest</th><th>If $5,100</th></tr>
+        <tr><td>&gt; $4,800</td><td>75%</td><td>$700</td><td>$933</td></tr>
+        <tr><td>&gt; $5,000</td><td>40%</td><td>$300</td><td>$750</td></tr>
+        <tr><td>&gt; $5,200</td><td>20%</td><td>$200</td><td>$0</td></tr>
+        <tr><td><b>Total</b></td><td></td><td><b>$1,200</b></td><td><b>$1,683</b></td></tr>
+      </table>
+      <p>Tighter rungs → more granularity but higher operational cost. Still loses principal when rent falls.</p>
+    </div>
+    <div class="note-box">
+      <label for="note-8">Your comment on this slide</label>
+      <textarea id="note-8" data-slide-title="Design 2 — Parametric"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Design 3</h1>
+    <h2>Yield-bearing collateral + prediction exposure</h2>
+    <div class="body">
+      <p>Combine <span class="highlight">60% T-Bills</span> (risk-free yield) with <span class="highlight">40% prediction shares</span>. If hedge fires, you keep purchasing power. If not, you still earn yield — better than fiat.</p>
+      <table>
+        <tr><th>Component</th><th>Invest</th><th>If $5,100</th><th>If $4,300</th></tr>
+        <tr><td>Pred. market subtotal</td><td>$480</td><td>$1,347</td><td>$0</td></tr>
+        <tr><td>T-Bills</td><td>$720</td><td>$745</td><td>$745</td></tr>
+        <tr><td><b>Total</b></td><td><b>$1,200</b></td><td><b>$2,092</b></td><td><b>$745</b></td></tr>
+      </table>
+      <p>Downside principal loss capped at <span class="accent">~38%</span> instead of total loss. The MMF + hedge wrapper has legal precedent — the prediction-market layer is the novelty.</p>
+    </div>
+    <div class="note-box">
+      <label for="note-9">Your comment on this slide</label>
+      <textarea id="note-9" data-slide-title="Design 3 — Yield + Hedge"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>The Open Problems</h1>
+    <h2>Specificity, liquidity, legality</h2>
+    <div class="body">
+      <ul>
+        <li><span class="highlight">Basis risk</span> — national CPI doesn't track Manhattan rent. Specificity gap = hedge gap.</li>
+        <li><span class="highlight">Liquidity</span> — cost-of-living markets are thin compared to sports/elections; need natural counterparties.</li>
+        <li><span class="highlight">Legal clarity</span> — the prediction-market hedging layer isn't regulated like traditional structured products.</li>
+      </ul>
+      <p>Hayek's insight wasn't that one currency would win, but that <span class="accent">competition would discover</span> which best preserved value. Realcoins are an entry into that competition. The tools exist today.</p>
+    </div>
+    <div class="note-box">
+      <label for="note-10">Your comment on this slide</label>
+      <textarea id="note-10" data-slide-title="Open Problems"></textarea>
+    </div>
+  </section>
+
+  <section class="slide">
+    <h1>Your Comments</h1>
+    <h2>Review and copy everything you wrote</h2>
+    <div class="body">
+      <p>All your slide comments compiled below. Click <span class="accent">Copy All</span> to grab them.</p>
+      <div class="summary-comments" id="summary"></div>
+      <button class="copy-btn" onclick="copyAll()">📋 Copy All Comments</button>
+      <span class="copy-feedback" id="copyFeedback">Copied to clipboard!</span>
+    </div>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button onclick="go(-1)" id="prev">← Prev</button>
+  <span class="counter" id="counter">1 / 11</span>
+  <button onclick="go(1)" id="next">Next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let i = 0;
+
+  function render() {
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+    document.getElementById('counter').textContent = `${i+1} / ${slides.length}`;
+    document.getElementById('prev').disabled = i === 0;
+    document.getElementById('next').disabled = i === slides.length - 1;
+    document.getElementById('progress').style.width = `${((i+1)/slides.length)*100}%`;
+    if (i === slides.length - 1) buildSummary();
+    saveNotes();
+  }
+
+  function go(d) {
+    i = Math.max(0, Math.min(slides.length - 1, i + d));
+    render();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft') go(-1);
+  });
+
+  function buildSummary() {
+    const boxes = document.querySelectorAll('textarea[data-slide-title]');
+    const out = [];
+    boxes.forEach((b, idx) => {
+      const txt = b.value.trim();
+      if (txt) {
+        out.push(`Slide ${idx+1} — ${b.dataset.slideTitle}\n${txt}\n`);
+      }
+    });
+    document.getElementById('summary').textContent = out.length
+      ? out.join('\n')
+      : '(No comments yet — go back and add some thoughts on any slide.)';
+  }
+
+  function copyAll() {
+    buildSummary();
+    const text = document.getElementById('summary').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const fb = document.getElementById('copyFeedback');
+      fb.classList.add('show');
+      setTimeout(() => fb.classList.remove('show'), 2000);
+    });
+  }
+
+  // Persist notes across reloads
+  function saveNotes() {
+    const data = {};
+    document.querySelectorAll('textarea[data-slide-title]').forEach(b => {
+      data[b.id] = b.value;
+    });
+    localStorage.setItem('realcoin-notes', JSON.stringify(data));
+  }
+  function loadNotes() {
+    const data = JSON.parse(localStorage.getItem('realcoin-notes') || '{}');
+    Object.entries(data).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    });
+  }
+
+  document.querySelectorAll('textarea').forEach(t => t.addEventListener('input', saveNotes));
+  loadNotes();
+  render();
+</script>
+</body>
+</html>
